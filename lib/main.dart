@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_secure_environment/environment.dart';
 
-void main() {
+void main() async {
+  await dotenv.load(fileName: "assets/.env");
   runApp(const MyApp());
 }
 
@@ -25,7 +27,7 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
-      home: const MyHomePage(title: 'Flutter Environment : ${Env.ENVIRONMENT}'),
+      home: const MyHomePage(title: 'Flutter Secure Environment '),
     );
   }
 }
@@ -50,6 +52,8 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
+  final baseUrl =
+      Env.ENVIRONMENT == 'production' ? 'BASE_URL_PROD' : 'BASE_URL_DEV';
 
   void _incrementCounter() {
     setState(() {
@@ -97,10 +101,10 @@ class _MyHomePageState extends State<MyHomePage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             const Text(
-              'You have pushed the button this many times:',
+              'You have pushed the url based by `${Env.ENVIRONMENT}` :',
             ),
             Text(
-              '$_counter',
+              '${dotenv.env[baseUrl]}',
               style: Theme.of(context).textTheme.headlineMedium,
             ),
           ],
