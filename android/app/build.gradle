@@ -58,6 +58,29 @@ android {
             // TODO: Add your own signing config for the release build.
             // Signing with the debug keys for now, so `flutter run --release` works.
             signingConfig signingConfigs.debug
+            minifyEnabled true
+//            useProguard true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            resValue "string", "app_name", "Secure Env Prod"
+        }
+        debug {
+            // TODO: Add your own signing config for the release build.
+            // Signing with the debug keys for now, so `flutter run --release` works.
+            minifyEnabled false
+            signingConfig signingConfigs.debug
+            resValue "string", "app_name", "Secure Env Dev"
+        }
+    }
+
+    flavorDimensions "flutter-flavours"
+
+    productFlavors {
+        development {
+            dimension "flutter-flavours"
+            applicationIdSuffix ".dev"
+        }
+        production {
+            dimension "flutter-flavours"
         }
     }
 }
